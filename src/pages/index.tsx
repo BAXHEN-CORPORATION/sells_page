@@ -71,9 +71,9 @@ const Home: NextPage = () => {
   const dayOfWeek = location?.location.day_of_week || "limit";
   const weekNumber = location?.location.week_number || "exceeded";
 
-  // React.useEffect(() => {
-  //   setTime((old) => (isDay && old !== "day" ? "day" : "night"));
-  // }, [isDay]);
+  React.useEffect(() => {
+    setTime((old) => (isDay && old !== "day" ? "day" : "night"));
+  }, [isDay]);
 
   return (
     <Box
