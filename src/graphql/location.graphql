@@ -1,0 +1,17 @@
+query getLocation {
+  location {
+    datetime
+    day_of_year
+    timezone
+    week_number
+    day_of_week
+    city {
+      name
+      name_translated
+    }
+    country {
+      name
+      name_translated
+    }
+  }
+}
