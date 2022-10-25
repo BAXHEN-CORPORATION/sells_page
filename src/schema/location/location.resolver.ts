@@ -23,6 +23,8 @@ export class LocationResolver {
       location: { city, country },
     } = ipGeolocationResponse.data.data;
 
-    return { ...worldTimeResponse.data, city, country };
+    const result = { ...worldTimeResponse.data, city, country };
+
+    return result;
   }
 }

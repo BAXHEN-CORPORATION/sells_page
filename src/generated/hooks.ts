@@ -1,7 +1,6 @@
 import { GraphQLClient } from "graphql-request";
 import { RequestInit } from "graphql-request/dist/types.dom";
 import { useQuery, UseQueryOptions } from "react-query";
-import { gqlClient } from "utils/api";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -15,7 +14,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 };
 
 function fetcher<TData, TVariables>(
-  client = gqlClient,
+  client: GraphQLClient,
   query: string,
   variables?: TVariables,
   headers?: RequestInit["headers"]
@@ -119,7 +118,7 @@ export const GetLocationDocument = `
 }
     `;
 export const useGetLocationQuery = <TData = GetLocationQuery, TError = unknown>(
-  client?: GraphQLClient,
+  client: GraphQLClient,
   variables?: GetLocationQueryVariables,
   options?: UseQueryOptions<GetLocationQuery, TError, TData>,
   headers?: RequestInit["headers"]
@@ -149,7 +148,7 @@ export const useGetRandomQuoteQuery = <
   TData = GetRandomQuoteQuery,
   TError = unknown
 >(
-  client?: GraphQLClient,
+  client: GraphQLClient,
   variables?: GetRandomQuoteQueryVariables,
   options?: UseQueryOptions<GetRandomQuoteQuery, TError, TData>,
   headers?: RequestInit["headers"]

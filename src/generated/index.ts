@@ -62,7 +62,7 @@ export type Quote = {
 export type GetLocationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLocationQuery = { __typename?: 'Query', location: { __typename?: 'Location', datetime: string, day_of_year: number, timezone: string, week_number: number, day_of_week: number, city: { __typename?: 'City', name: string, name_translated: string }, country: { __typename?: 'Country', name: string, name_translated: string } } };
+export type GetLocationQuery = { __typename?: 'Query', location: { __typename?: 'Location', datetime: string, day_of_year: number, timezone: string, week_number: number, day_of_week: number, city: { __typename?: 'City', name: string }, country: { __typename?: 'Country', name: string } } };
 
 export type GetRandomQuoteQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -80,11 +80,9 @@ export const GetLocationDocument = gql`
     day_of_week
     city {
       name
-      name_translated
     }
     country {
       name
-      name_translated
     }
   }
 }

@@ -5,7 +5,6 @@ import { Box, Fade, IconButton, Slide, Stack, Typography } from "@mui/material";
 import { useGetLocationQuery, useGetRandomQuoteQuery } from "generated/hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowsRotate } from "@fortawesome/free-solid-svg-icons/faArrowsRotate";
-import { faSun } from "@fortawesome/free-solid-svg-icons/faSun";
 import { dehydrate } from "react-query";
 
 import mobileDay from "assets/images/mobile/bg-daytime.jpg";
@@ -15,6 +14,7 @@ import ShowButton from "components/ShowButton";
 import {
   getLocation,
   getRandomQuote,
+  gqlClient,
   queryClient,
   ReactQueryKeys,
 } from "utils/api";
@@ -37,14 +37,24 @@ const greeting = {
 const Home: NextPage = () => {
   const [time, setTime] = React.useState<"day" | "night">("day");
 
+  console.log({ time });
+
   const [showMore, setShowMore] = React.useState(false);
 
-  const { data: location } = useGetLocationQuery();
-  const { data: quote } = useGetRandomQuoteQuery();
+  const { data: location } = useGetLocationQuery(gqlClient);
+  const { data: quote } = useGetRandomQuoteQuery(gqlClient);
 
-  const currDate = new Date(location?.location.datetime as string);
+  const currDate = !location?.location.datetime
+    ? new Date()
+    : new Date(location?.location.datetime as string);
 
-  const hours = `${currDate.getHours()}:${currDate.getMinutes()}`;
+  const hours = `${currDate.getHours()}:${currDate
+    .getMinutes()
+    .toLocaleString(undefined, {
+      minimumIntegerDigits: 2,
+    })}`;
+
+  const isDay = currDate.getHours() < 18 && currDate.getHours() > 5;
 
   const timezone = currDate
     .toLocaleDateString(undefined, {
@@ -53,28 +63,32 @@ const Home: NextPage = () => {
     })
     .slice(2);
 
-  const country = location?.location.country.name;
-  const city = location?.location.city.name;
+  const country = location?.location.country.name || "max";
+  const city = location?.location.city.name || "requests limit exceeded";
 
-  const timezoneLong = location?.location.timezone.replace("_", " ");
-  const dayNumber = location?.location.day_of_year;
-  const weekNumber = location?.location.week_number;
-  const dayOfWeek = location?.location.day_of_week;
+  const timezoneLong = location?.location?.timezone?.replace("_", " ") || "max";
+  const dayNumber = location?.location.day_of_year || "requests";
+  const dayOfWeek = location?.location.day_of_week || "limit";
+  const weekNumber = location?.location.week_number || "exceeded";
+
+  // React.useEffect(() => {
+  //   setTime((old) => (isDay && old !== "day" ? "day" : "night"));
+  // }, [isDay]);
 
   return (
     <Box
-      height="100vh"
+      minHeight="100vh"
       width="100%"
       sx={{
         position: "relative",
-        backgroundImage: { mobile: `url(${mobileImages[time].src})` },
+        // backgroundImage: { mobile: `url(${mobileImages[time].src})` },
         backgroundSize: "cover",
         background: {
           mobile: `linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url(${mobileImages[time].src})`,
         },
       }}
     >
-      <Stack height="100%" padding="32px 25px" paddingBottom="40px">
+      <Stack minHeight="inherit" padding="32px 25px" paddingBottom="40px">
         <Fade in={!showMore}>
           <Stack spacing={2} display={showMore ? "none" : "flex"}>
             <Stack direction="row">
@@ -129,6 +143,7 @@ const Home: NextPage = () => {
             height="256px"
             width="100%"
             sx={{
+              display: showMore ? "flex" : "none",
               position: "absolute",
               bottom: 0,
               left: 0,

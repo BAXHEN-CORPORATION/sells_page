@@ -12,6 +12,13 @@ const theme = createTheme({
   breakpoints,
   typography,
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          // overflow: "hidden",
+        },
+      },
+    },
     MuiButton: {
       ...button,
     },
