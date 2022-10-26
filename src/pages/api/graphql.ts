@@ -23,7 +23,9 @@ export const config = {
 
 const startServer = server.start();
 
-export default async (req: NextApiRequest, res: NextApiResponse<any>) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
   await startServer;
   await server.createHandler({ path: "/api/graphql" })(req, res);
 };
+
+export default handler

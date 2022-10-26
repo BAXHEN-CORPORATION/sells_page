@@ -11,6 +11,13 @@ const typography: (palette: Palette) => TypographyOptions = (palette) => {
       fontWeight: 700,
       color: palette.common.white,
       letterSpacing: "-5px",
+
+      [utilityTheme.breakpoints.up("desktop")]: {
+        fontSize: "200px",
+      },
+      [utilityTheme.breakpoints.down("desktop")]: {
+        fontSize: "175px",
+      },
       [utilityTheme.breakpoints.down("tablet")]: {
         fontSize: "100px",
       },
@@ -20,6 +27,9 @@ const typography: (palette: Palette) => TypographyOptions = (palette) => {
       lineHeight: 1.05,
       fontWeight: 700,
       color: palette.common.white,
+      [utilityTheme.breakpoints.up("desktop")]: {
+        fontSize: "56px",
+      },
       [utilityTheme.breakpoints.down("desktop")]: {
         fontSize: "40px",
       },
@@ -34,24 +44,43 @@ const typography: (palette: Palette) => TypographyOptions = (palette) => {
       color: palette.common.white,
       letterSpacing: "4.8px",
       textTransform: "uppercase",
+      [utilityTheme.breakpoints.up("desktop")]: {
+        fontSize: "24px",
+      },
+      [utilityTheme.breakpoints.down("desktop")]: {
+        fontSize: "18px",
+        letterSpacing: "3.6px",
+      },
       [utilityTheme.breakpoints.down("tablet")]: {
         fontSize: "15px",
         letterSpacing: "3px",
       },
     },
     h4: {
-      fontSize: "20px",
+      fontSize: "40px",
       lineHeight: 1.4,
       fontWeight: 400,
       color: palette.common.white,
       letterSpacing: "4px",
       textTransform: "uppercase",
+      [utilityTheme.breakpoints.up("desktop")]: {
+        fontSize: "40px",
+      },
+      [utilityTheme.breakpoints.down("desktop")]: {
+        fontSize: "32px",
+      },
+      [utilityTheme.breakpoints.down("tablet")]: {
+        fontSize: "15px",
+      },
     },
     h5: {
       fontSize: "18px",
       lineHeight: 1.55,
       fontWeight: 700,
       color: palette.common.white,
+      [utilityTheme.breakpoints.up("desktop")]: {
+        fontSize: "18px",
+      },
       [utilityTheme.breakpoints.down("tablet")]: {
         fontSize: "12px",
       },
@@ -63,6 +92,9 @@ const typography: (palette: Palette) => TypographyOptions = (palette) => {
       color: palette.common.white,
       letterSpacing: "3px",
       textTransform: "uppercase",
+      [utilityTheme.breakpoints.up("desktop")]: {
+        fontSize: "15px",
+      },
       [utilityTheme.breakpoints.down("desktop")]: {
         fontSize: "13px",
       },
@@ -75,6 +107,10 @@ const typography: (palette: Palette) => TypographyOptions = (palette) => {
       lineHeight: 1.55,
       fontWeight: 400,
       color: palette.common.white,
+      [utilityTheme.breakpoints.up("desktop")]: {
+        fontSize: "18px",
+      },
+
       [utilityTheme.breakpoints.down("tablet")]: {
         fontSize: "12px",
       },

@@ -1,28 +1,38 @@
 import type { NextPage } from "next";
 import React from "react";
 
-import { Box, Fade, IconButton, Slide, Stack, Typography } from "@mui/material";
-import { useGetLocationQuery, useGetRandomQuoteQuery } from "generated/hooks";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowsRotate } from "@fortawesome/free-solid-svg-icons/faArrowsRotate";
-import { dehydrate } from "react-query";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Box, Fade, IconButton, Slide, Stack, Typography } from "@mui/material";
+import { dehydrate, useQuery } from "react-query";
 
 import mobileDay from "assets/images/mobile/bg-daytime.jpg";
 import mobileNight from "assets/images/mobile/bg-nighttime.jpg";
+import tabletDay from "assets/images/tablet/bg-daytime.jpg";
+import tabletNight from "assets/images/tablet/bg-nighttime.jpg";
+import desktopDay from "assets/images/desktop/bg-daytime.jpg";
+import desktopNight from "assets/images/desktop/bg-nighttime.jpg";
 
+import { DarkMode, LightMode } from "@mui/icons-material";
 import ShowButton from "components/ShowButton";
 import {
   getLocation,
   getRandomQuote,
-  gqlClient,
   queryClient,
   ReactQueryKeys,
 } from "utils/api";
-import { DarkMode, LightMode } from "@mui/icons-material";
 
 const mobileImages = {
   day: mobileDay,
   night: mobileNight,
+};
+const tabletImages = {
+  day: tabletDay,
+  night: tabletNight,
+};
+const desktopImages = {
+  day: desktopDay,
+  night: desktopNight,
 };
 
 const greeting = {
@@ -35,18 +45,20 @@ const greeting = {
 };
 
 const Home: NextPage = () => {
-  const [time, setTime] = React.useState<"day" | "night">("day");
-
-  console.log({ time });
+  const [time, setTime] = React.useState<"day" | "night">("night");
 
   const [showMore, setShowMore] = React.useState(false);
 
-  const { data: location } = useGetLocationQuery(gqlClient);
-  const { data: quote } = useGetRandomQuoteQuery(gqlClient);
+  const { data: location } = useQuery([ReactQueryKeys.getLocation], () =>
+    getLocation()
+  );
+  const { data: quote } = useQuery([ReactQueryKeys.getRandomQuote], () =>
+    getRandomQuote()
+  );
 
-  const currDate = !location?.location.datetime
+  const currDate = !location?.location?.datetime
     ? new Date()
-    : new Date(location?.location.datetime as string);
+    : new Date(location?.location?.datetime as string);
 
   const hours = `${currDate.getHours()}:${currDate
     .getMinutes()
@@ -67,12 +79,12 @@ const Home: NextPage = () => {
   const city = location?.location.city.name || "requests limit exceeded";
 
   const timezoneLong = location?.location?.timezone?.replace("_", " ") || "max";
-  const dayNumber = location?.location.day_of_year || "requests";
-  const dayOfWeek = location?.location.day_of_week || "limit";
-  const weekNumber = location?.location.week_number || "exceeded";
+  const dayNumber = location?.location?.day_of_year || "requests";
+  const dayOfWeek = location?.location?.day_of_week || "limit";
+  const weekNumber = location?.location?.week_number || "exceeded";
 
   React.useEffect(() => {
-    setTime((old) => (isDay && old !== "day" ? "day" : "night"));
+    setTime(isDay ? "day" : "night");
   }, [isDay]);
 
   return (
@@ -81,19 +93,24 @@ const Home: NextPage = () => {
       width="100%"
       sx={{
         position: "relative",
-        // backgroundImage: { mobile: `url(${mobileImages[time].src})` },
         backgroundSize: "cover",
-        background: {
+        backgroundRepeat: "no-repeat",
+        backgroundImage: {
           mobile: `linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url(${mobileImages[time].src})`,
+          tablet: `linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url(${tabletImages[time].src})`,
+          desktop: `linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url(${desktopImages[time].src})`,
         },
       }}
     >
-      <Stack minHeight="inherit" padding="32px 25px" paddingBottom="40px">
+      <Stack
+        minHeight="inherit"
+        padding={{ mobile: "32px 25px", tablet: "80px 64px" }}
+        paddingBottom="40px"
+      >
         <Fade in={!showMore}>
           <Stack spacing={2} display={showMore ? "none" : "flex"}>
             <Stack direction="row">
               <Typography variant="body" sx={{ flex: 1 }}>
-                {" "}
                 "{quote?.quoteRandom.en}"
               </Typography>
               <IconButton
@@ -111,7 +128,7 @@ const Home: NextPage = () => {
                 <FontAwesomeIcon icon={faArrowsRotate} />
               </IconButton>
             </Stack>
-            <Typography variant="h5"> {quote?.quoteRandom.author}</Typography>
+            <Typography variant="h5"> {quote?.quoteRandom?.author}</Typography>
           </Stack>
         </Fade>
 
@@ -119,28 +136,58 @@ const Home: NextPage = () => {
           sx={{ marginTop: "auto !important", marginBottom: "3rem !important" }}
         >
           <Stack spacing={2} direction="row" alignItems="center" mb={2}>
-            {greeting[time].Icon}
-            <Typography variant="h4">{greeting[time].greeting}</Typography>
+            {greeting[time]?.Icon}
+            <Typography
+              variant="h4"
+              fontSize={{ mobile: "15px", tablet: "18px" }}
+            >
+              {greeting[time].greeting}, it's currently
+            </Typography>
           </Stack>
           <Stack spacing={2} direction="row" mb={2}>
             <Typography variant="h1">{hours}</Typography>
-            <Typography variant="h4" sx={{ alignSelf: "flex-end" }}>
+            <Typography
+              variant="h4"
+              sx={{ alignSelf: "flex-end", fontWeight: 300 }}
+            >
               {timezone}
             </Typography>
           </Stack>
-          <Stack spacing={2} direction="row">
-            <Typography variant="h3">
+          <Stack
+            direction={{ mobile: "column", tablet: "column", desktop: "row" }}
+            mt="28px"
+          >
+            <Typography
+              variant="h3"
+              sx={{
+                marginRight: { mobile: 0, desktop: "auto" },
+                marginBottom: { mobile: "40px", desktop: 0 },
+              }}
+            >
               in {country}, {city}
             </Typography>
+            <ShowButton
+              show={showMore}
+              onClick={(_, show) => setShowMore(show)}
+            />
           </Stack>
         </Stack>
-        <ShowButton show={showMore} onClick={(_, show) => setShowMore(show)} />
 
-        <Box height={showMore ? "256px" : 0}></Box>
+        <Box
+          height={
+            showMore
+              ? {
+                  mobile: "calc(40vh - 40px)",
+                  tablet: "calc(40vh - 90px)",
+                  desktop: "calc(40vh - 80px)",
+                }
+              : 0
+          }
+        ></Box>
 
         <Slide in={showMore} direction="up">
           <Stack
-            height="256px"
+            height={{ mobile: "40vh", tablet: "40vh", desktop: "40vh" }}
             width="100%"
             sx={{
               display: showMore ? "flex" : "none",
@@ -148,40 +195,97 @@ const Home: NextPage = () => {
               bottom: 0,
               left: 0,
               backdropFilter: "blur(20px)",
-              padding: "48px 26px 16px 26px",
+              padding: {
+                mobile: "48px 26px 16px 26px",
+                tablet: "119px 166px 119px 64px",
+              },
             }}
-            bgcolor="rgba(255, 255, 255, 0.75)"
+            bgcolor={
+              time === "day"
+                ? "rgba(255, 255, 255, 0.75)"
+                : "rgba(0, 0, 0, 0.75)"
+            }
           >
-            <Stack width="100%" height="100%" justifyContent="space-between">
-              <Stack direction="row" flex={1} justifyContent="space-between">
-                <Typography variant="h6" color="black">
+            <Stack
+              width="100%"
+              height="100%"
+              justifyContent="space-between"
+              flexWrap="wrap"
+              direction={{ mobile: "column", tablet: "row" }}
+            >
+              <Stack
+                direction={{ mobile: "row", tablet: "column" }}
+                flex={1}
+                minWidth="50%"
+                justifyContent={{ mobile: "space-between", tablet: "unset" }}
+              >
+                <Typography
+                  variant="h6"
+                  color={time === "day" ? "black" : "white"}
+                >
                   Current timezone
                 </Typography>
-                <Typography variant="h2" color="black">
+                <Typography
+                  variant="h2"
+                  color={time === "day" ? "black" : "white"}
+                >
                   {timezoneLong}
                 </Typography>
               </Stack>
-              <Stack direction="row" flex={1} justifyContent="space-between">
-                <Typography variant="h6" color="black">
+              <Stack
+                direction={{ mobile: "row", tablet: "column" }}
+                flex={1}
+                minWidth="50%"
+                justifyContent={{ mobile: "space-between", tablet: "unset" }}
+              >
+                <Typography
+                  variant="h6"
+                  color={time === "day" ? "black" : "white"}
+                >
                   Day of the year
                 </Typography>
-                <Typography variant="h2" color="black">
+                <Typography
+                  variant="h2"
+                  color={time === "day" ? "black" : "white"}
+                >
                   {dayNumber}
                 </Typography>
               </Stack>
-              <Stack direction="row" flex={1} justifyContent="space-between">
-                <Typography variant="h6" color="black">
+              <Stack
+                direction={{ mobile: "row", tablet: "column" }}
+                flex={1}
+                minWidth="50%"
+                justifyContent={{ mobile: "space-between", tablet: "unset" }}
+              >
+                <Typography
+                  variant="h6"
+                  color={time === "day" ? "black" : "white"}
+                >
                   Day of the week
                 </Typography>
-                <Typography variant="h2" color="black">
+                <Typography
+                  variant="h2"
+                  color={time === "day" ? "black" : "white"}
+                >
                   {dayOfWeek}
                 </Typography>
               </Stack>
-              <Stack direction="row" flex={1} justifyContent="space-between">
-                <Typography variant="h6" color="black">
+              <Stack
+                direction={{ mobile: "row", tablet: "column" }}
+                flex={1}
+                minWidth="50%"
+                justifyContent={{ mobile: "space-between", tablet: "unset" }}
+              >
+                <Typography
+                  variant="h6"
+                  color={time === "day" ? "black" : "white"}
+                >
                   Week number
                 </Typography>
-                <Typography variant="h2" color="black">
+                <Typography
+                  variant="h2"
+                  color={time === "day" ? "black" : "white"}
+                >
                   {weekNumber}
                 </Typography>
               </Stack>

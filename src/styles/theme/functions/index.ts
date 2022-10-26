@@ -3,9 +3,11 @@ import linearGradient from "./linearGradient";
 import pxToRem from "./pxToRem";
 import rgba from "./rgba";
 
-export default {
+const functions = {
   hexToRgb,
   linearGradient,
   pxToRem,
   rgba,
 };
+
+export default functions;
