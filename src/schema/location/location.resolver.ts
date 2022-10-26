@@ -19,7 +19,7 @@ export class LocationResolver {
       .get<IPGeolocationResponse>(
         `https://api.ipbase.com/v2/info?apikey=${process.env.API_KEY_IP_LOCATION}&ip=${ip}`
       )
-      .catch(console.log);
+      .catch(() => {});
 
     const city = ipGeolocationResponse?.data?.data?.location?.city || {
       name: "",
