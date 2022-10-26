@@ -15,13 +15,20 @@ export class LocationResolver {
       `http://worldtimeapi.org/api/ip/${ip}`
     );
 
-    const ipGeolocationResponse = await axios.get<IPGeolocationResponse>(
-      `https://api.ipbase.com/v2/info?apikey=${process.env.API_KEY_IP_LOCATION}&ip=${ip}`
-    );
+    const ipGeolocationResponse = await axios
+      .get<IPGeolocationResponse>(
+        `https://api.ipbase.com/v2/info?apikey=${process.env.API_KEY_IP_LOCATION}&ip=${ip}`
+      )
+      .catch(console.log);
 
-    const {
-      location: { city, country },
-    } = ipGeolocationResponse.data.data;
+    const city = ipGeolocationResponse?.data?.data?.location?.city || {
+      name: "",
+      name_translated: "",
+    };
+    const country = ipGeolocationResponse?.data?.data?.location?.country || {
+      name: "",
+      name_translated: "",
+    };
 
     const result = { ...worldTimeResponse.data, city, country };
 
