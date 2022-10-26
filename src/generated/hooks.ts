@@ -20,6 +20,7 @@ function fetcher<TData, TVariables>(
   headers?: RequestInit["headers"]
 ) {
   return async (): Promise<TData> =>
+    //@ts-ignore
     client.request<TData, TVariables>(query, variables, headers);
 }
 /** All built-in and custom scalars, mapped to their actual values */
