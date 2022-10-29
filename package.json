@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:lambda": "netlify-lambda build src/pages/api",
+    "build:lambda": "netlify-lambda build src/lambda",
     "generate": "graphql-codegen",
     "start": "next start",
-    "start:lambda": "netlify-lambda serve src/pages/api",
+    "start:lambda": "netlify-lambda serve src/lambda",
     "lint": "next lint"
   },
   "dependencies": {
