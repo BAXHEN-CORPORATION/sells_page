@@ -31,7 +31,7 @@ const server = new ApolloServer({
   context: (ctx) => ctx,
 });
 
-await server.start();
+const serverStart = await server.start();
 
 const apolloMiddleware = server.getMiddleware({
   path: "/api/graphql",
