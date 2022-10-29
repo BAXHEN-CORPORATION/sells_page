@@ -13,18 +13,7 @@ export const config = {
 };
 
 const handler = async function (event: any, context: any) {
-  const schema = await buildSchema({
-    resolvers: [LocationResolver, QuoteResolver],
-  });
-
-  const server = new ApolloServer({
-    schema,
-  });
-
-  return new Promise((yay, nay) => {
-    const cb = (err: any, args: any) => (err ? nay(err) : yay(args));
-    server.createHandler()(event, context, cb);
-  });
+  console.log({ event, context });
 };
 
 export default handler;
