@@ -29,6 +29,7 @@ function runMiddleware(
 const server = new ApolloServer({
   schema,
   context: (ctx) => ctx,
+  cache: "bounded",
 });
 
 await server.start();
