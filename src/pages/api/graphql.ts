@@ -31,24 +31,23 @@ const server = new ApolloServer({
   context: (ctx) => ctx,
 });
 
-const startServer = server.start();
+await server.start();
 
 const apolloMiddleware = server.getMiddleware({
   path: "/api/graphql",
 });
-async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
-  await startServer;
-
-  return runMiddleware(req, res, apolloMiddleware);
-}
-export default handler;
 
 export const config = {
   api: {
     bodyParser: false,
-    externalResolver: true,
   },
 };
+
+async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
+  return runMiddleware(req, res, apolloMiddleware);
+}
+
+export default handler;
 
 // const server = new ApolloServer({
 //   schema,
