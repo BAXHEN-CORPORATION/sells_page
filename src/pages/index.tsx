@@ -297,21 +297,23 @@ const Home: NextPage = () => {
   );
 };
 
-export const getServerSideProps = async () => {
-  try {
-    await queryClient.prefetchQuery(ReactQueryKeys.getLocation, () =>
-      getLocation()
-    );
-    await queryClient.prefetchQuery(ReactQueryKeys.getRandomQuote, () =>
-      getRandomQuote()
-    );
+export const getServerSideProps = async ({ req }: any) => {
+  const { context } = req.netlifyFunctionParams || {};
 
-    const dehydratedState = dehydrate(queryClient);
-    return { props: { dehydratedState: {} } };
-  } catch (error) {
-    console.log({ error });
+  if (context) {
+    console.log("Setting callbackWaitsForEmptyEventLoop: false");
+    context.callbackWaitsForEmptyEventLoop = false;
   }
-  return { props: { dehydratedState: {} } };
+
+  await queryClient.prefetchQuery(ReactQueryKeys.getLocation, () =>
+    getLocation()
+  );
+  await queryClient.prefetchQuery(ReactQueryKeys.getRandomQuote, () =>
+    getRandomQuote()
+  );
+
+  const dehydratedState = dehydrate(queryClient);
+  return { props: { dehydratedState } };
 };
 
 export default Home;
