@@ -1,7 +1,6 @@
 import { ApolloServer } from "apollo-server-express";
 import { NextApiRequest, NextApiResponse } from "next";
 import { buildSchema } from "type-graphql";
-import { processRequest } from "graphql-upload";
 import "reflect-metadata";
 
 import { LocationResolver } from "schema/location";
@@ -32,15 +31,13 @@ const server = new ApolloServer({
   context: (ctx) => ctx,
 });
 
-async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
-  const contentType = req.headers["content-type"];
+const startServer = server.start();
 
-  if (contentType && contentType.startsWith("multipart/form-data")) {
-    req.body = await processRequest(req, res);
-  }
-  const apolloMiddleware = server.getMiddleware({
-    path: "/api/graphql",
-  });
+const apolloMiddleware = server.getMiddleware({
+  path: "/api/graphql",
+});
+async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
+  await startServer;
 
   return runMiddleware(req, res, apolloMiddleware);
 }
