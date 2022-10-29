@@ -298,12 +298,12 @@ const Home: NextPage = () => {
 };
 
 export const getServerSideProps = async () => {
-  await queryClient.prefetchQuery(ReactQueryKeys.getLocation, () =>
-    getLocation()
-  );
-  await queryClient.prefetchQuery(ReactQueryKeys.getRandomQuote, () =>
-    getRandomQuote()
-  );
+  // await queryClient.prefetchQuery(ReactQueryKeys.getLocation, () =>
+  //   getLocation()
+  // );
+  // await queryClient.prefetchQuery(ReactQueryKeys.getRandomQuote, () =>
+  //   getRandomQuote()
+  // );
   return { props: { dehydratedState: dehydrate(queryClient) } };
 };
 
