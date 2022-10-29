@@ -298,12 +298,19 @@ const Home: NextPage = () => {
 };
 
 export const getServerSideProps = async () => {
-  await queryClient.prefetchQuery(ReactQueryKeys.getLocation, () =>
-    getLocation()
-  );
-  await queryClient.prefetchQuery(ReactQueryKeys.getRandomQuote, () =>
-    getRandomQuote()
-  );
+  try {
+    await queryClient.prefetchQuery(ReactQueryKeys.getLocation, () =>
+      getLocation()
+    );
+    await queryClient.prefetchQuery(ReactQueryKeys.getRandomQuote, () =>
+      getRandomQuote()
+    );
+
+    const dehydratedState = dehydrate(queryClient);
+    return { props: { dehydratedState: {} } };
+  } catch (error) {
+    console.log({ error });
+  }
   return { props: { dehydratedState: {} } };
 };
 
