@@ -38,6 +38,7 @@
     "type-graphql": "^1.1.1"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.20.0",
     "@graphql-codegen/cli": "^2.13.7",
     "@graphql-codegen/typescript": "^2.8.0",
     "@graphql-codegen/typescript-graphql-request": "^4.5.7",
