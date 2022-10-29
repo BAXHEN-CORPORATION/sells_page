@@ -297,14 +297,7 @@ const Home: NextPage = () => {
   );
 };
 
-export const getServerSideProps = async ({ req }: any) => {
-  const { context } = req.netlifyFunctionParams || {};
-
-  if (context) {
-    console.log("Setting callbackWaitsForEmptyEventLoop: false");
-    context.callbackWaitsForEmptyEventLoop = false;
-  }
-
+export const getStaticProps = async () => {
   await queryClient.prefetchQuery(ReactQueryKeys.getLocation, () =>
     getLocation()
   );
