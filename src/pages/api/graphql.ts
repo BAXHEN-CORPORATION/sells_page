@@ -13,6 +13,11 @@ const schema = await buildSchema({
 
 const server = new ApolloServer({
   schema,
+
+  introspection: true,
+  context(ctx) {
+    return ctx;
+  },
 });
 
 export const config = {
@@ -28,4 +33,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
   await server.createHandler({ path: "/api/graphql" })(req, res);
 };
 
-export default handler
+export default handler;
