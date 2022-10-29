@@ -299,14 +299,20 @@ const Home: NextPage = () => {
   // );
 };
 
-// export const getServerSideProps = async () => {
-//   // await queryClient.prefetchQuery(ReactQueryKeys.getLocation, () =>
-//   //   getLocation()
-//   // );
-//   // await queryClient.prefetchQuery(ReactQueryKeys.getRandomQuote, () =>
-//   //   getRandomQuote()
-//   // );
-//   return { props: { dehydratedState: dehydrate(queryClient) } };
-// };
+export const getServerSideProps = async () => {
+  // await queryClient.prefetchQuery(ReactQueryKeys.getLocation, () =>
+  //   getLocation()
+  // );
+  // await queryClient.prefetchQuery(ReactQueryKeys.getRandomQuote, () =>
+  //   getRandomQuote()
+  // );
+
+  try {
+    const dehydratedState = dehydrate(queryClient);
+    return { props: { dehydratedState } };
+  } catch (error) {}
+
+  return { props: { dehydratedState: {} } };
+};
 
 export default Home;
