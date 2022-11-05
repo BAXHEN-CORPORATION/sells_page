@@ -15,9 +15,15 @@ export interface GreetingProps {
 //** Default Props */
 const defaultProps: Partial<GreetingProps> = {};
 
-const greeting = {
-  day: { greeting: "Good Morning", Icon: <LightMode htmlColor="white" /> },
-  night: { greeting: "Good evening", Icon: <DarkMode htmlColor="white" /> },
+export const greetingConfig = {
+  day: {
+    greeting: "Good Morning, it's currently",
+    Icon: <LightMode htmlColor="white" />,
+  },
+  night: {
+    greeting: "Good evening, it's currently",
+    Icon: <DarkMode htmlColor="white" />,
+  },
 };
 
 /**
@@ -25,12 +31,16 @@ const greeting = {
  *
  * @component
  */
-const Greeting: React.FC<GreetingProps> = ({time}) => {
+const Greeting: React.FC<GreetingProps> = ({ time }) => {
   return (
     <Stack spacing={2} direction="row" alignItems="center" mb={2}>
-      {greeting[time]?.Icon}
-      <Typography variant="h4" fontSize={{ mobile: "15px", tablet: "18px" }}>
-        {greeting[time].greeting}, it's currently
+      {greetingConfig[time]?.Icon}
+      <Typography
+        data-testid="greeting"
+        variant="h4"
+        fontSize={{ mobile: "15px", tablet: "18px" }}
+      >
+        {greetingConfig[time].greeting}
       </Typography>
     </Stack>
   );

@@ -51,6 +51,7 @@ const TimezoneDetails: React.FC<TimezoneDetailsProps> = ({
       ></Box>
       <Slide in={show} direction="up">
         <Stack
+          data-testid="details"
           height={{ mobile: "40vh", tablet: "35vh", desktop: "40vh" }}
           width="100%"
           sx={{

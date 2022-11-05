@@ -34,7 +34,7 @@ const Quote: React.FC<QuoteProps> = ({ show, quote, author, onClick }) => {
     <Fade in={!show}>
       <Stack spacing={2} display={show ? "none" : "flex"}>
         <Stack direction="row">
-          <Typography variant="body" sx={{ flex: 1 }}>
+          <Typography data-testid="quote" variant="body" sx={{ flex: 1 }}>
             "{quote}"
           </Typography>
           <IconButton
@@ -44,11 +44,14 @@ const Quote: React.FC<QuoteProps> = ({ show, quote, author, onClick }) => {
               marginBottom: "auto",
             }}
             onClick={onClick}
+            data-testid="refresh"
           >
             <FontAwesomeIcon icon={faArrowsRotate} />
           </IconButton>
         </Stack>
-        <Typography variant="h5"> {author}</Typography>
+        <Typography variant="h5" data-testid="author">
+          {author}
+        </Typography>
       </Stack>
     </Fade>
   );

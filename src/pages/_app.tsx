@@ -22,8 +22,6 @@ export interface MyAppProps extends AppProps {
 const MyApp = (props: MyAppProps) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
-  console.log({ pageProps });
-
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>

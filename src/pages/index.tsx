@@ -32,8 +32,10 @@ const Home: NextPage = () => {
 
   const [showMore, setShowMore] = React.useState(false);
 
-  const { data: location } = useQuery([ReactQueryKeys.getLocation], () =>
-    getLocation()
+  const { data: location } = useQuery(
+    [ReactQueryKeys.getLocation],
+    () => getLocation(),
+    { refetchOnMount: true }
   );
   const { data: quoteRandom } = useQuery([ReactQueryKeys.getRandomQuote], () =>
     getRandomQuote()
@@ -75,7 +77,7 @@ const Home: NextPage = () => {
         <title>Clock App Challenge - MUI 5| NextJs | GraphQL</title>
         <meta
           name="description"
-          content="Clock App design made with MUI 5, NextJs and GraphQL. This a challenge made by Leonardo Rebouças."
+          content="Clock App design made with MUI 5, NextJs and GraphQL. This is a challenge made by Leonardo Rebouças."
           key="desc"
         />
         <meta property="og:title" content="Clock App" />
@@ -85,6 +87,7 @@ const Home: NextPage = () => {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
       </Head>
+
       <Box
         minHeight="100vh"
         width="100%"
@@ -152,9 +155,6 @@ const Home: NextPage = () => {
 export const getStaticProps = async () => {
   await queryClient.prefetchQuery(ReactQueryKeys.getLocation, () =>
     getLocation()
-  );
-  await queryClient.prefetchQuery(ReactQueryKeys.getRandomQuote, () =>
-    getRandomQuote()
   );
 
   const dehydratedState = dehydrate(queryClient);

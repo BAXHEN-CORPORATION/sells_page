@@ -22,7 +22,9 @@ const defaultProps: Partial<TimeProps> = {};
 const Time: React.FC<TimeProps> = ({ hours, timezone }) => {
   return (
     <Stack spacing={2} direction="row" mb={2}>
-      <Typography variant="h1">{hours}</Typography>
+      <Typography data-testid="hours" variant="h1">
+        {hours}
+      </Typography>
       <Typography variant="h4" sx={{ alignSelf: "flex-end", fontWeight: 300 }}>
         {timezone}
       </Typography>

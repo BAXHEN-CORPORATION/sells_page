@@ -44,6 +44,7 @@ const ShowButton: React.FC<ShowButtonProps> = ({
   }, [show]);
   return (
     <Button
+      data-testid="show-button"
       variant="show"
       sx={[
         show
