@@ -1,14 +1,15 @@
 import type { NextPage } from "next";
 import React from "react";
 
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { dehydrate, useQuery } from "react-query";
 
-import { DarkMode, LightMode } from "@mui/icons-material";
+import Greeting from "components/Greeting";
+import Location from "components/Location";
 import Quote from "components/Quote";
 import ShowButton from "components/ShowButton";
+import Time from "components/Time";
 import TimezoneDetails from "components/TimezoneDetails";
-import Location from "components/Location";
 import { TimezoneInfo } from "components/TimezoneDetails/TimezoneDetails";
 import {
   getLocation,
@@ -19,8 +20,6 @@ import {
 import { getDate, getHoursFormatted, getIsDay, getTimezone } from "utils/date";
 import { desktopImages, mobileImages, tabletImages } from "utils/images";
 import { getLocationInfo } from "utils/location";
-import Greeting from "components/Greeting";
-import Time from "components/Time";
 
 export type TTime = "day" | "night";
 
