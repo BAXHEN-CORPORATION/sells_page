@@ -4,6 +4,7 @@ import breakpoints from "./base/breakpoints";
 import colors from "./base/colors";
 import typography from "./base/typography";
 import button from "./components/button";
+import functions from "./functions";
 
 const theme = createTheme({
   palette: {
@@ -11,11 +12,14 @@ const theme = createTheme({
   },
   breakpoints,
   typography,
+  functions: { ...functions },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          // overflow: "hidden",
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
         },
       },
     },

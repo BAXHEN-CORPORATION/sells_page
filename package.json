@@ -20,7 +20,6 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.10",
-    "apollo-server-express": "^3.10.3",
     "apollo-server-lambda": "^3.10.3",
     "apollo-server-micro": "^3.10.3",
     "axios": "^1.1.3",

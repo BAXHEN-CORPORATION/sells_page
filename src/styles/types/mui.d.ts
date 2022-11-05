@@ -1,5 +1,7 @@
 import "@mui/material";
 
+import functions from "styles/theme/functions";
+
 declare module "@mui/material" {
   //** Palette */
 
@@ -7,6 +9,14 @@ declare module "@mui/material" {
     gray: string;
     hoverGray: string;
     iconGray: string;
+  }
+
+  interface ThemeOptions {
+    functions: typeof functions;
+  }
+
+  interface Theme {
+    functions: typeof functions;
   }
 
   interface TypographyVariants {
