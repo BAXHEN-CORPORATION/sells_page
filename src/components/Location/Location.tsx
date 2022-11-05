@@ -10,6 +10,11 @@ import React from "react";
 export interface LocationProps {
   country: string;
   city: string;
+  show: boolean;
+  onShowClick?: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    show: boolean
+  ) => void;
 }
 
 //** Default Props */
@@ -20,7 +25,12 @@ const defaultProps: Partial<LocationProps> = {};
  *
  * @component
  */
-const Location: React.FC<LocationProps> = ({ country, city }) => {
+const Location: React.FC<LocationProps> = ({
+  country,
+  city,
+  show,
+  onShowClick,
+}) => {
   return (
     <Stack
       direction={{ mobile: "column", tablet: "column", desktop: "row" }}
@@ -35,6 +45,7 @@ const Location: React.FC<LocationProps> = ({ country, city }) => {
       >
         in {country}, {city}
       </Typography>
+      <ShowButton show={show} onClick={onShowClick} />
     </Stack>
   );
 };

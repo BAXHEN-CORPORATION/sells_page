@@ -20,6 +20,7 @@ import {
 import { getDate, getHoursFormatted, getIsDay, getTimezone } from "utils/date";
 import { desktopImages, mobileImages, tabletImages } from "utils/images";
 import { getLocationInfo } from "utils/location";
+import Backlinks from "components/Backlinks";
 
 export type TTime = "day" | "night";
 
@@ -106,15 +107,22 @@ const Home: NextPage = () => {
         >
           <Greeting time={time} />
           <Time hours={hours} timezone={timezone} />
-          <Location city={city} country={country} />
-          <ShowButton
+          <Location
+            city={city}
+            country={country}
             show={showMore}
-            onClick={(_, show) => setShowMore(show)}
+            onShowClick={(_, show) => setShowMore(show)}
           />
         </Stack>
 
         <TimezoneDetails show={showMore} time={time} info={timezoneInfo} />
       </Stack>
+      <Backlinks
+        links={[
+          "https://leonardo.baxhen.com",
+          "https://product-preview.baxhen.com",
+        ]}
+      />
     </Box>
   );
 };
