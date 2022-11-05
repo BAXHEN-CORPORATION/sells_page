@@ -153,8 +153,8 @@ const Home: NextPage = () => {
 };
 
 export const getStaticProps = async () => {
-  await queryClient.prefetchQuery(ReactQueryKeys.getLocation, () =>
-    getLocation()
+  await queryClient.prefetchQuery(ReactQueryKeys.getRandomQuote, () =>
+    getRandomQuote()
   );
 
   const dehydratedState = dehydrate(queryClient);
