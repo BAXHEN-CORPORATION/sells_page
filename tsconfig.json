@@ -14,9 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": "./src",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "baseUrl": "./src"
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

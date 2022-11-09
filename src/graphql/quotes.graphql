@@ -1,6 +1,0 @@
-query getRandomQuote {
-  quoteRandom {
-    en
-    author
-  }
-}
