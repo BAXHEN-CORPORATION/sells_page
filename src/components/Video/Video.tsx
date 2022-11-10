@@ -31,8 +31,6 @@ const Video: React.FC<VideoProps> = ({ videoId }) => {
     e.target.playVideo();
     e.target.hideVideoInfo();
 
-    console.log({ e });
-
     videoRef.current = e;
   };
 
@@ -43,11 +41,24 @@ const Video: React.FC<VideoProps> = ({ videoId }) => {
       display="flex"
       alignItems="center"
       position="relative"
+      sx={{ cursor: "pointer" }}
     >
       <Box
         onClick={(e) => {
           if (videoRef.current) {
             const target = videoRef.current.target;
+
+            const isMuted = target.isMuted();
+
+            if (isMuted) {
+              target.unMute();
+              target.seekTo(0);
+              target.playVideo();
+
+              setPlay("playing");
+              return;
+            }
+
             target.pauseVideo();
             setPlay("stop");
           }
