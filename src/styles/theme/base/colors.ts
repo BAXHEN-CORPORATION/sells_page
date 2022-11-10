@@ -8,6 +8,7 @@ const colors: PaletteOptions = {
     hoverGray: "#999999",
     iconGray: lighten("#707070", 0.5),
   },
+  secondary: { main: "#0482B4" },
 };
 
 export default colors;
