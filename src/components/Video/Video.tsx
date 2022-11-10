@@ -37,14 +37,16 @@ const Video: React.FC<VideoProps> = ({ videoId }) => {
   return (
     <Box
       height="388px"
+      width="630px"
       overflow="hidden"
       display="flex"
       alignItems="center"
+      justifyContent="center"
       position="relative"
       sx={{ cursor: "pointer" }}
     >
       <Box
-        onClick={(e) => {
+        onClick={() => {
           if (videoRef.current) {
             const target = videoRef.current.target;
 
