@@ -1,6 +1,5 @@
 import { Palette } from "@mui/material/styles";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
-import utilityTheme from "../utility-theme";
 
 const typography: (palette: Palette) => TypographyOptions = (palette) => {
   return {
