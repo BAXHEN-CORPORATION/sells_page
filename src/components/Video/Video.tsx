@@ -33,6 +33,13 @@ const Video: React.FC<VideoProps> = ({ videoId }) => {
 
     videoRef.current = e;
   };
+  const onEnd: (event: YouTubeEvent<any>) => void = (e) => {
+    const target = videoRef.current!.target;
+
+    target.seekTo(0);
+    target.pauseVideo();
+    setPlay("stop");
+  };
 
   return (
     <Box
@@ -146,6 +153,7 @@ const Video: React.FC<VideoProps> = ({ videoId }) => {
           showinfo: 0,
         }}
         onReady={onReady}
+        onEnd={onEnd}
       />
     </Box>
   );

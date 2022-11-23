@@ -5,9 +5,14 @@ import functions from "styles/theme/functions";
 declare module "@mui/material" {
   //** Palette */
 
+  interface PaletteOptions {
+    tertiary?: PaletteColorOptions;
+  }
+
   interface CommonColors {
     gray: string;
     hoverGray: string;
+    activeText: string;
     iconGray: string;
   }
 
@@ -35,6 +40,7 @@ declare module "@mui/material" {
 
   interface TypographyPropsVariantOverrides {
     body: true;
+    active: true;
     //* remove default variants
     body1: false;
     body2: false;

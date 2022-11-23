@@ -18,6 +18,14 @@ const typography: (palette: Palette) => TypographyOptions = (palette) => {
       color: palette.common.black,
       textAlign: "center",
     },
+    active: {
+      fontSize: "25px",
+      lineHeight: 1.4,
+      fontWeight: 700,
+      color: palette.common.activeText,
+      textAlign: "center",
+      textTransform: "uppercase",
+    },
     h3: {
       fontSize: "24px",
       lineHeight: 1.4,
@@ -26,63 +34,35 @@ const typography: (palette: Palette) => TypographyOptions = (palette) => {
       textAlign: "center",
     },
     h4: {
-      fontSize: "40px",
-      lineHeight: 1.4,
-      fontWeight: 400,
-      color: palette.common.white,
-      letterSpacing: "4px",
-      textTransform: "uppercase",
-      [utilityTheme.breakpoints.up("desktop")]: {
-        fontSize: "40px",
-      },
-      [utilityTheme.breakpoints.down("desktop")]: {
-        fontSize: "32px",
-      },
-      [utilityTheme.breakpoints.down("tablet")]: {
-        fontSize: "15px",
-      },
+      fontSize: "76px",
+      lineHeight: 1.3,
+      wordSpacing: "8px",
+      fontWeight: "bold",
+      color: palette.common.activeText,
+      textAlign: "center",
     },
     h5: {
-      fontSize: "18px",
-      lineHeight: 1.55,
-      fontWeight: 700,
-      color: palette.common.white,
-      [utilityTheme.breakpoints.up("desktop")]: {
-        fontSize: "18px",
-      },
-      [utilityTheme.breakpoints.down("tablet")]: {
-        fontSize: "12px",
-      },
+      fontSize: "32px",
+      lineHeight: 1.1,
+      fontWeight: 600,
+      color: palette.common.activeText,
+      textAlign: "center",
     },
-    h6: {
-      fontSize: "15px",
-      lineHeight: 1.87,
-      fontWeight: 400,
-      color: palette.common.white,
-      letterSpacing: "3px",
-      textTransform: "uppercase",
-      [utilityTheme.breakpoints.up("desktop")]: {
-        fontSize: "15px",
-      },
-      [utilityTheme.breakpoints.down("desktop")]: {
-        fontSize: "13px",
-      },
-      [utilityTheme.breakpoints.down("tablet")]: {
-        fontSize: "10px",
-      },
-    },
-    body: {
-      fontSize: "18px",
-      lineHeight: 1.55,
-      fontWeight: 400,
-      color: palette.common.white,
-      [utilityTheme.breakpoints.up("desktop")]: {
-        fontSize: "18px",
-      },
 
-      [utilityTheme.breakpoints.down("tablet")]: {
-        fontSize: "12px",
-      },
+    subtitle1: {
+      fontSize: "14px",
+      lineHeight: 1.1,
+      fontWeight: 400,
+      textAlign: "center",
+    },
+
+    subtitle2: {
+      fontSize: "12.5px",
+      wordSpacing: "1px",
+      lineHeight: 2,
+      letterSpacing: "1px",
+      fontWeight: 600,
+      textAlign: "center",
     },
   };
 };
