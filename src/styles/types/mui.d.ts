@@ -2,11 +2,17 @@ import "@mui/material";
 
 import functions from "styles/theme/functions";
 
+import { SimplePaletteColorOptions, PaletteColor } from "@mui/material/styles";
+
 declare module "@mui/material" {
   //** Palette */
 
   interface PaletteOptions {
     tertiary?: PaletteColorOptions;
+  }
+
+  interface Palette {
+    tertiary: PaletteColor;
   }
 
   interface CommonColors {

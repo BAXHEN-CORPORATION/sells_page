@@ -6,8 +6,11 @@ import CardContent from "@mui/material/CardContent";
 import CardActionArea from "@mui/material/CardActionArea";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { Theme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
+
+import DoneIcon from "@mui/icons-material/Done";
+import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
 
 //** Local Imports */
 
@@ -23,13 +26,19 @@ export interface PricingCardProps {
   title: string;
   subtitle: string;
   currency: string;
+  action: string;
+  actionUrl: string;
+  actionVariant?: "outlined" | "contained";
+  features: string[];
   price: number;
 }
 
 //** Default Props */
 const defaultProps: Partial<PricingCardProps> = {
   variant: "primary",
-  locale: "en",
+  locale: "pt",
+  features: [],
+  actionVariant: "outlined",
 };
 
 const bestValueSx = {
@@ -64,6 +73,10 @@ const PricingCard: React.FC<PricingCardProps> = ({
   locale,
   currency,
   price,
+  features,
+  action,
+  actionVariant,
+  actionUrl,
 }) => {
   const bestValueJsx = (
     <Box
@@ -83,7 +96,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
   );
 
   return (
-    <Card elevation={4}>
+    <Card elevation={4} sx={{ paddingBottom: "2rem" }}>
       <Stack
         p={2}
         height="111px"
@@ -105,7 +118,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
       </Stack>
       <CardContent sx={{ width: "330px" }}>
         <Stack alignItems="center">
-          <Typography fontSize="30px" fontWeight={600}>
+          <Typography fontSize="42px" fontWeight={600} mb={2} mt={1}>
             <Typography
               component="span"
               fontSize="calc(60em/100)"
@@ -117,13 +130,36 @@ const PricingCard: React.FC<PricingCardProps> = ({
             </Typography>
             {price}
           </Typography>
-          {/* <Typography color="#5B5B5B" fontWeight={400} fontSize="1rem">
-            Per Month
-          </Typography> */}
+          <Stack width="100%" justifyContent="flex-start">
+            {features.map((feature) => (
+              <Box key={feature}>
+                <Box display="flex" gap="1rem" p="0.5rem">
+                  <DoneIcon
+                    sx={{ fill: (theme) => theme.palette.primary.main }}
+                  />
+
+                  <Typography>{feature}</Typography>
+                </Box>
+                <Divider />
+              </Box>
+            ))}
+          </Stack>
         </Stack>
       </CardContent>
 
-      <CardActionArea></CardActionArea>
+      <Box
+        sx={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
+      >
+        <Button
+          LinkComponent="a"
+          href={actionUrl}
+          target="__blank"
+          variant={actionVariant}
+          size="medium"
+        >
+          {action}
+        </Button>
+      </Box>
     </Card>
   );
 };
